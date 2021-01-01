@@ -2,4 +2,4 @@
 
 set -e
 
-mono --debug /sonarr/Sonarr.exe -nobrowser -data=/config
+mono --debug /jackett/JackettConsole.exe --NoUpdates --DataFolder=/config
