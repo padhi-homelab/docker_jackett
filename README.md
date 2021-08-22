@@ -1,7 +1,7 @@
 # docker_jackett <a href='https://github.com/padhi-homelab/docker_jackett/actions?query=workflow%3A%22Docker+CI+Release%22'><img align='right' src='https://img.shields.io/github/workflow/status/padhi-homelab/docker_jackett/Docker%20CI%20Release?logo=github&logoWidth=24&style=flat-square'></img></a>
 
-<a href='https://microbadger.com/images/padhihomelab/jackett'><img src='https://img.shields.io/microbadger/layers/padhihomelab/jackett/latest?logo=docker&logoWidth=24&style=for-the-badge'></img></a>
 <a href='https://hub.docker.com/r/padhihomelab/jackett'><img src='https://img.shields.io/docker/image-size/padhihomelab/jackett/latest?label=size%20%5Blatest%5D&logo=docker&logoWidth=24&style=for-the-badge'></img></a>
+<a href='https://hub.docker.com/r/padhihomelab/jackett'><img src='https://img.shields.io/docker/image-size/padhihomelab/jackett/testing?label=size%20%5Btesting%5D&logo=docker&logoWidth=24&style=for-the-badge'></img></a>
 
 A multiarch [Jackett] Docker image, based on [Debian Linux].
 
@@ -11,7 +11,18 @@ A multiarch [Jackett] Docker image, based on [Debian Linux].
 
 ## Usage
 
+### With Docker
+
+```sh
+docker run -p 9117:9117 -it padhihomelab/jackett
 ```
+
+Runs `Jackett` with WebUI served on port 9117.
+<br>
+To run it in background, use the `--detach` flag.
+
+Typically, you shouldn't need to directly access the files written by Jackett to disk, but it is still a good idea (e.g., for easier backups) to map the persistent volume to a host directory:
+```sh
 docker run --detach \
            -p 9117:9117 \
            -e DOCKER_UID=`id -u` \
@@ -20,10 +31,11 @@ docker run --detach \
            -it padhihomelab/jackett
 ```
 
-Runs `Jackett` with WebUI served on port 9117.
+Usage with [Docker Compose] is similarly straightforward.
+<br>
+As an example, you can see my configuration in [services/trackarr].
 
-_<More details to be added soon>_
-
-
-[Debian Linux]: https://debian.org/
-[Jackett]:      https://github.com/Jackett/Jackett
+[Debian Linux]:      https://debian.org/
+[Docker Compose]:    https://docs.docker.com/compose/
+[Jackett]:           https://github.com/Jackett/Jackett
+[services/trackarr]: https://github.com/padhi-homelab/services/tree/master/trackarr
