@@ -1,14 +1,20 @@
 FROM padhihomelab/debian-base:11.0_0.19.0_git.212b7514
 
-ARG JACKETT_VERSION=0.18.582
+
+ARG JACKETT_VERSION=0.18.746
+
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Mono.tar.gz" \
     /tmp/jackett.tar.gz
 
-COPY jackett.sh      /usr/local/bin/jackett
-COPY setup-volume.sh /etc/docker-entrypoint.d/setup-volume.sh
 
-RUN chmod +x /etc/docker-entrypoint.d/setup-volume.sh \
+COPY jackett.sh \
+     /usr/local/bin/jackett
+COPY entrypoint-scripts \
+     /etc/docker-entrypoint.d/99-extra-scripts
+
+
+RUN chmod +x /etc/docker-entrypoint.d/99-extra-scripts/*.sh \
              /usr/local/bin/jackett \
  && cd /tmp \
  && tar -xvzf jackett.tar.gz \
@@ -28,10 +34,13 @@ RUN chmod +x /etc/docker-entrypoint.d/setup-volume.sh \
  && apt autoremove -yq \
  && apt clean
 
+
 EXPOSE 9117
 VOLUME [ "/config", "/downloads" ]
 
+
 CMD [ "jackett" ]
+
 
 HEALTHCHECK --start-period=10s --interval=30s --timeout=5s --retries=3 \
         CMD ["wget", "--tries", "5", "-qSO", "/dev/null",  "http://localhost:9117/"]
