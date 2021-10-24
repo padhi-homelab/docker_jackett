@@ -1,7 +1,7 @@
 FROM padhihomelab/debian-base:11.0_0.19.0_git.212b7514
 
 
-ARG JACKETT_VERSION=0.18.1025
+ARG JACKETT_VERSION=0.19.50
 
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Mono.tar.gz" \
@@ -22,9 +22,14 @@ RUN chmod +x /etc/docker-entrypoint.d/99-extra-scripts/*.sh \
            /tmp/jackett.tar.gz \
  && mv /tmp/Jackett /jackett \
  && apt update \
- && apt install -yq apt-transport-https dirmngr gnupg ca-certificates \
+ && apt install -yq apt-transport-https \
+                    dirmngr \
+                    gnupg \
+                    ca-certificates \
  && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
+ # TODO: Switch to `stable-bullseye` channel when available
  && echo "deb https://download.mono-project.com/repo/debian stable-buster main" | tee /etc/apt/sources.list.d/mono-official-stable.list \
+ && update-ca-certificates -v \
  && apt update \
  && apt upgrade -yq \
  && apt install -yq ca-certificates-mono \
