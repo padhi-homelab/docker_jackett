@@ -1,7 +1,7 @@
 FROM padhihomelab/debian-base:11.2_0.19.0_git.212b7514
 
 
-ARG JACKETT_VERSION=0.20.555
+ARG JACKETT_VERSION=0.20.639
 
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Mono.tar.gz" \
