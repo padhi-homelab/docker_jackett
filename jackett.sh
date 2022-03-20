@@ -2,4 +2,4 @@
 
 set -e
 
-mono --debug /jackett/JackettConsole.exe --NoUpdates --DataFolder=/config
+/jackett/jackett --NoUpdates --DataFolder=/config

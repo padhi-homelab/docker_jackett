@@ -1,10 +1,22 @@
-FROM padhihomelab/debian-base:11.2_0.19.0_git.212b7514
+FROM padhihomelab/debian-base:11.2_0.19.0_git.212b7514 as base
+ARG TARGETARCH
+
+FROM base AS base-amd64
+ENV JACKETT_ARCH=AMDx64
+
+FROM base AS base-arm64
+ENV JACKETT_ARCH=ARM64
+
+FROM base AS base-armv7
+ENV JACKETT_ARCH=ARM32
+
+FROM base-${TARGETARCH}${TARGETVARIANT}
 
 
-ARG JACKETT_VERSION=0.20.726
+ARG JACKETT_VERSION=0.20.736
 
 
-ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Mono.tar.gz" \
+ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Linux${JACKETT_ARCH}.tar.gz" \
     /tmp/jackett.tar.gz
 
 
@@ -22,18 +34,8 @@ RUN chmod +x /etc/docker-entrypoint.d/99-extra-scripts/*.sh \
            /tmp/jackett.tar.gz \
  && mv /tmp/Jackett /jackett \
  && apt update \
- && apt install -yq apt-transport-https \
-                    dirmngr \
-                    gnupg \
+ && apt install -yq libicu67 \
                     ca-certificates \
- && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
- # TODO: Switch to `stable-bullseye` channel when available
- && echo "deb https://download.mono-project.com/repo/debian stable-buster main" | tee /etc/apt/sources.list.d/mono-official-stable.list \
- && update-ca-certificates -v \
- && apt update \
- && apt upgrade -yq \
- && apt install -yq ca-certificates-mono \
-                    mono-devel \
                     tzdata \
                     wget \
  && apt autoremove -yq \
