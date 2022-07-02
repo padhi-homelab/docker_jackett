@@ -17,11 +17,12 @@ A multiarch [Jackett] Docker image, based on [Debian Linux].
 docker run -p 9117:9117 -it padhihomelab/jackett
 ```
 
-Runs `Jackett` with WebUI served on port 9117.
+Runs [Jackett] with WebUI served on port 9117.
 <br>
 To run it in background, use the `--detach` flag.
 
 Typically, you shouldn't need to directly access the files written by Jackett to disk, but it is still a good idea (e.g., for easier backups) to map the persistent volume to a host directory:
+
 ```sh
 docker run --detach \
            -p 9117:9117 \
@@ -33,9 +34,9 @@ docker run --detach \
 
 Usage with [Docker Compose] is similarly straightforward.
 <br>
-As an example, you can see my configuration in [services/trackarr].
+As an example, you can see my configuration in [services/indexarr].
 
 [Debian Linux]:      https://debian.org/
 [Docker Compose]:    https://docs.docker.com/compose/
 [Jackett]:           https://github.com/Jackett/Jackett
-[services/trackarr]: https://github.com/padhi-homelab/services/tree/master/trackarr
+[services/trackarr]: https://github.com/padhi-homelab/services/tree/master/indexarr
