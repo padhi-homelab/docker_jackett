@@ -1,4 +1,4 @@
-FROM padhihomelab/debian-base:11.3_0.19.0_git.212b7514 as base
+FROM padhihomelab/debian-base:11.4_0.19.0_git.212b7514 as base
 ARG TARGETARCH
 
 FROM base AS base-amd64
@@ -13,7 +13,7 @@ ENV JACKETT_ARCH=ARM32
 FROM base-${TARGETARCH}${TARGETVARIANT}
 
 
-ARG JACKETT_VERSION=0.20.1263
+ARG JACKETT_VERSION=0.20.1470
 
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Linux${JACKETT_ARCH}.tar.gz" \
