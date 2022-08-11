@@ -13,7 +13,7 @@ ENV JACKETT_ARCH=ARM32
 FROM base-${TARGETARCH}${TARGETVARIANT}
 
 
-ARG JACKETT_VERSION=0.20.1470
+ARG JACKETT_VERSION=0.20.1680
 
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Linux${JACKETT_ARCH}.tar.gz" \
@@ -49,5 +49,5 @@ VOLUME [ "/config", "/downloads" ]
 CMD [ "jackett" ]
 
 
-HEALTHCHECK --start-period=10s --interval=30s --timeout=5s --retries=3 \
-        CMD ["wget", "--tries", "5", "-qSO", "/dev/null",  "http://localhost:9117/"]
+HEALTHCHECK --start-period=10s --interval=30s --timeout=5s \
+        CMD ["wget", "--tries", "5", "-qSO", "/dev/null",  "http://127.0.0.1:9117/"]
