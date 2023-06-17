@@ -1,4 +1,4 @@
-FROM padhihomelab/debian-base:11.7_0.19.0_git.212b7514 as base
+FROM padhihomelab/alpine-base:3.18.2_0.19.0_0.2 as base
 ARG TARGETARCH
 
 FROM base AS base-amd64
@@ -13,10 +13,10 @@ ENV JACKETT_ARCH=ARM32
 FROM base-${TARGETARCH}${TARGETVARIANT}
 
 
-ARG JACKETT_VERSION=0.20.4199
+ARG JACKETT_VERSION=0.21.241
 
 
-ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Linux${JACKETT_ARCH}.tar.gz" \
+ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.LinuxMusl${JACKETT_ARCH}.tar.gz" \
     /tmp/jackett.tar.gz
 
 
@@ -28,18 +28,14 @@ COPY entrypoint-scripts \
 
 RUN chmod +x /etc/docker-entrypoint.d/99-extra-scripts/*.sh \
              /usr/local/bin/jackett \
+ && apk add --no-cache --update \
+            icu-libs \
+            tzdata \
  && cd /tmp \
  && tar -xvzf jackett.tar.gz \
  && rm -rf Jackett/JackettUpdater* \
            /tmp/jackett.tar.gz \
- && mv /tmp/Jackett /jackett \
- && apt update \
- && apt install -yq libicu67 \
-                    ca-certificates \
-                    tzdata \
-                    wget \
- && apt autoremove -yq \
- && apt clean
+ && mv /tmp/Jackett /jackett
 
 
 EXPOSE 9117
