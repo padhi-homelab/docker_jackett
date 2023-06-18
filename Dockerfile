@@ -13,7 +13,7 @@ ENV JACKETT_ARCH=ARM32
 FROM base-${TARGETARCH}${TARGETVARIANT}
 
 
-ARG JACKETT_VERSION=0.21.241
+ARG JACKETT_VERSION=0.21.245
 
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.LinuxMusl${JACKETT_ARCH}.tar.gz" \
@@ -46,4 +46,4 @@ CMD [ "jackett" ]
 
 
 HEALTHCHECK --start-period=10s --interval=30s --timeout=5s \
-        CMD ["wget", "--tries", "5", "-qSO", "/dev/null",  "http://127.0.0.1:9117/"]
+        CMD ["wget", "--tries", "5", "-qSO", "/dev/null",  "http://127.0.0.1:9117/UI/Login"]
