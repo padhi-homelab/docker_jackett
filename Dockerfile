@@ -1,4 +1,4 @@
-FROM padhihomelab/alpine-base:3.19.1_0.19.0_0.2 as base
+FROM padhihomelab/alpine-base:3.20.1_0.19.0_0.2 as base
 ARG TARGETARCH
 
 FROM base AS base-amd64
@@ -13,7 +13,7 @@ ENV JACKETT_ARCH=ARM32
 FROM base-${TARGETARCH}${TARGETVARIANT}
 
 
-ARG JACKETT_VERSION=0.21.2899
+ARG JACKETT_VERSION=0.22.277
 
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.LinuxMusl${JACKETT_ARCH}.tar.gz" \
