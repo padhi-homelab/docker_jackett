@@ -13,7 +13,7 @@ ENV JACKETT_ARCH=ARM32
 FROM base-${TARGETARCH}${TARGETVARIANT}
 
 
-ARG JACKETT_VERSION=0.22.554
+ARG JACKETT_VERSION=0.22.565
 
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.LinuxMusl${JACKETT_ARCH}.tar.gz" \
@@ -31,7 +31,6 @@ RUN chmod +x /etc/docker-entrypoint.d/99-extra-scripts/*.sh \
  && apk add --no-cache --update \
             icu-libs \
             tzdata \
-            wget \
  && cd /tmp \
  && tar -xvzf jackett.tar.gz \
  && rm -rf Jackett/JackettUpdater* \
@@ -48,4 +47,4 @@ CMD [ "jackett" ]
 
 HEALTHCHECK --start-period=10s --interval=30s --timeout=5s \
         CMD [ "wget", "--tries", "5", "-qSO", "/dev/null", \
-              "http://127.0.0.1:9117/UI/Login?cookiesChecked=1" ]
+              "http://127.0.0.1:9117/health" ]
