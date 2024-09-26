@@ -13,7 +13,7 @@ ENV JACKETT_ARCH=ARM32
 FROM base-${TARGETARCH}${TARGETVARIANT}
 
 
-ARG JACKETT_VERSION=0.22.565
+ARG JACKETT_VERSION=0.22.671
 
 
 ADD "https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.LinuxMusl${JACKETT_ARCH}.tar.gz" \
